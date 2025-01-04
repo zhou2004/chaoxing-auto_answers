@@ -95,7 +95,7 @@ if __name__ == '__main__':
         if edge_driver_version == edge_version :
             print("Edge版本已和dirver版本一致")
         else :
-            download_driver(Base_edgedriver_url)
+            download_driver(Base_edgedriver_url,file_path)
             unzip_driver(file_path, parent_file_path)
             subprocess.run(['powershell', '-Command', f"del {edgedriver_location}"], check=True)
 

@@ -76,4 +76,60 @@ def decode_questions_info(html_content) -> dict:
     return form_data
 
 
+def decode_ocr_question(content):
+    form_data = {}
+    form_data['questions'] = []
+    is_question = False
+    # 打印按行组织的数据
+    for y, line_texts in sorted(content.items()):
+
+        merged_str = ''.join(map(str, line_texts))
+        print(merged_str)
+        if '【单选题】' or '【单选题]' in merged_str:
+            is_question = True
+            question = {}
+            form_data['questions'].append(question)
+            form_data['questions'][-1]['title'] = merged_str
+            form_data['questions'][-1]['type'] = 'single'
+            form_data['questions'][-1]['options'] = ''
+            continue
+
+        if '【判断题】' or '【判断题]' in merged_str:
+            is_question = True
+            question = {}
+            form_data['questions'].append(question)
+            form_data['questions'][-1]['title'] = merged_str
+            form_data['questions'][-1]['type'] = 'judgement'
+            form_data['questions'][-1]['options'] = ''
+            continue
+
+        if '【多选题】' or '【多选题]' in merged_str:
+            is_question = True
+            question = {}
+            form_data['questions'].append(question)
+            form_data['questions'][-1]['title'] = merged_str
+            form_data['questions'][-1]['type'] = 'multiple'
+            form_data['questions'][-1]['options'] = ''
+            continue
+
+        if '【填空题】' or '【填空题]' in merged_str:
+            is_question = True
+            question = {}
+            form_data['questions'].append(question)
+            form_data['questions'][-1]['title'] = merged_str
+            form_data['questions'][-1]['type'] = 'completion'
+            form_data['questions'][-1]['options'] = ''
+            continue
+
+        if is_question:
+            options = form_data['questions'][-1]['options']
+            form_data['questions'][-1]['options'] = f"{options}{merged_str}\n"
+    return form_data
+
+
+
+
+
+
+
 

@@ -2,7 +2,7 @@ from src.tool import *
 from src.chapter import *
 from src.config import GlobalConst as gc
 from src.cookies import *
-#from src.answer import *
+from src.answer import *
 API = ''
 Base_URL = ''
 
@@ -218,11 +218,11 @@ if __name__ == '__main__':
                             print("跳过该题目")
                             continue
                         #获取题目表单
-                        form_data=course.get_test_questions()
+                        form_data,test_question_url=course.get_test_questions()
                         print(form_data)
 
                         #填写答案
-                        complete_answer(driver, form_data)
+                        complete_answer(driver, form_data,test_question_url,j)
                         # 返回两次，回到第一个iframe
                         driver.switch_to.parent_frame()
                         driver.switch_to.parent_frame()

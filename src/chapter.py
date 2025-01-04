@@ -68,14 +68,14 @@ class Course :
 
         except TimeoutException :
             self.driver.switch_to.parent_frame()
-            return None
+            return None,None
         except NoSuchElementException:
             self.driver.switch_to.parent_frame()
-            return None
+            return None,None
         except StaleElementReferenceException:
             self.driver.switch_to.parent_frame()
-            return None
-        return questions
+            return None,None
+        return questions,iframe_document_url
 
 
     #获取一个章节的所有iframe框架，以列表形式返回（每个章节对应的iframe都包含视频，pdf,题目这些内容）
